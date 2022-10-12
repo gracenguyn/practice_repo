@@ -1,0 +1,73 @@
+---
+title: "Project1"
+author: "Grace Nguyen"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
+library(ggplot2)
+turbines <- read.csv("Project1_wind_turbines.csv")
+```
+
+# **Introduction to the Dataset**
+> Introduce your dataset and briefly describe the variables it contains, how it was collected, and any relevant background to give your reader context about the variables. Describe which variable is your chosen outcome and which predictors you will be investigating.
+
+![(Courtesy: ©Can Stock Photo/ssuaphoto)](windturbines.jpeg)
+
+The __wind_turbines__ dataset contains variables collected by the United States Geological Survey for the United States Wind Turbine database. This data provides locations and technical specifications of legacy and current versions of the United States Wind Turbines database, almost all of which are utility-scale, meaning that they generate power and feed it into the grid, supplying a utility with energy, as opposed to ones that feed homeowners and businesses, which are usually much smaller. Quarterly releases update the database with newly installed wind turbines, removes wind turbines that have been identified as dismantled, and applies other verifications based on updated imagery and ongoing quality-control. Turbine data were gathered from the Federal Aviation Administration's (FAA) Digital Obstacle File (DOF).
+
+*We will be assessing if the total height, rotor diameter, and year made operational predict electrical generation capacity of the turbine.*
+
+The **Total Height** variable measures the turbine's height in its entirety, measured in meters.
+
+The **Rotor Diameter** variable measures the diameter, in meters, of the turbine's rotor.
+
+The **Year** variable defines the year when the turbine's project became operational.
+
+The **Turbine Capacity** variable measures the electrical generation capacity of individual turbines, measured in kilo-watts (KW).
+
+# **Outcome Variable Distributions**
+> Describe the univariate distribution of your outcome variable, including a graph.
+
+```{r echo=FALSE}
+ggplot(turbines) + aes(x=Turbine.Capacity) +  geom_histogram(binwidth=200, col='black', fill="#43a2ca") + xlab('Turbine Capacity (kilo-watts)') + ylab("Frequency") + xlim(0, 5000) + ggtitle('Univariate Distribution of Turbine Capacity') + theme_classic() #outcome variable/DV is turbine capacity
+```
+
+Our selected outcome variable is electrical generation capacity of the turbine, or Turbine Capacity for short. The distribution of the outcome variable is approximately unimodal and somewhat symmetrical, with a slight right skew. The average electrical generation capacity is `r mean(turbines$Turbine.Capacity)`, with a standard deviation of `r sd(turbines$Turbine.Capacity)`. When comparing the mean capacity with the median capacity, `r median(turbines$Turbine.Capacity)`, the median value is similar but slightly higher than the mean, lending credence to the assertion that the distribution is unimodal with a slight right skew.
+
+# **Bivariate Relationships**
+> For each of your three predictors, create relevant graphs and describe their relationships with your outcome variable.
+
+```{r echo=FALSE}
+ggplot(turbines) + aes(x=Turbine.Capacity, y=Turbine.Total_Height) +  geom_point(col='green') + xlab('Turbine Capacity (kilo-watts)') + ylab("Total Turbine Height (meters)") + ggtitle('Distribution of Turbine Capacity and Total Height') + theme_classic() #outcome variable/DV is turbine capacity
+```
+
+The correlation coefficient between Turbine Capacity (KW) and Total Height of the Turbine (m) is `r cor(turbines$Turbine.Capacity, turbines$Turbine.Total_Height)`. Both the coefficient and the scatter plot reveal a strong positive correlation between Turbine Capacity and Total Height, where the two variables are directly correlated. This means that generally, as the turbine's total height increases, this correlates to an increase in turbine capacity as well.
+
+```{r echo=FALSE}
+ggplot(turbines) + aes(x=Turbine.Capacity, y=Turbine.Rotor_Diameter) +  geom_point(col='blue') + xlab('Turbine Capacity (kilo-watts)') + ylab("Rotor Diameter") + ggtitle('Distribution of Turbine Capacity and Rotor Diameter') + theme_classic()
+```
+
+The correlation coefficient between Turbine Capacity (KW) and Rotor Diameter of the Turbine (m) is `r cor(turbines$Turbine.Capacity, turbines$Turbine.Rotor_Diameter)`. Both the coefficient and the scatter plot reveal a strong positive correlation between Turbine Capacity and Rotor Diameter, where the two variables are directly correlated. This means that generally, as the turbine's rotor diameter increases, this correlates to an increase in turbine capacity as well.
+
+```{r echo=FALSE}
+ggplot(turbines) + aes(x=Turbine.Capacity, y=Year) +  geom_point(col='purple') + xlab('Turbine Capacity (kilo-watts)') + ylab("Year First Made Operational") + ggtitle('Distribution of Turbine Capacity and Operational Year') + theme_classic()
+```
+
+The correlation coefficient between Turbine Capacity (KW) and Year when the turbine's project became operational is `r cor(turbines$Turbine.Capacity, turbines$Year)`. Both the coefficient and the scatter plot reveal a relatively strong positive correlation between Turbine Capacity and Year, where the two variables are directly correlated. This means that generally, later/more recent operational founding years correlates to higher turbine electrical generation capacity.
+
+# **Conclusion**
+> Write a conclusion that summarizes your findings and suggests areas for future research.
+
+In investing our outcome variable, turbine electric generation capacity, we found that our predictors; total height, rotor diameter, and year, all strongly and positively correlate with electric generation capacity of turbines in the dataset. Some relevant areas for future research could include: analysis of the impact of geographical location as a predictor for electrical generation, investigation of technological advances which made operational year a predictor of electrical generation, or a comparison if larger wind turbines in fewer quantities have more utility than smaller wind turbines in large quantities.
+
+### **References**
+
+Diffendorfer, James E. ScienceBase, US Geological Survey, 19 Apr. 2018, [https://www.sciencebase.gov/catalog/item/57bdfd8fe4b03fd6b7df5ff9.](https://www.sciencebase.gov/catalog/item/57bdfd8fe4b03fd6b7df5ff9)
+
+Kaftura, Dennis. “Wind Turbines CSV File.” CORGIS Datasets Project, 17 Oct. 2021, [https://think.cs.vt.edu/corgis/csv/wind_turbines/.](https://think.cs.vt.edu/corgis/csv/wind_turbines/)
