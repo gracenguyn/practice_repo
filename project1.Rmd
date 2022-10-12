@@ -50,7 +50,7 @@ ggplot(turbines) + aes(x=Turbine.Capacity, y=Turbine.Total_Height) +  geom_point
 The correlation coefficient between Turbine Capacity (KW) and Total Height of the Turbine (m) is `r cor(turbines$Turbine.Capacity, turbines$Turbine.Total_Height)`. Both the coefficient and the scatter plot reveal a strong positive correlation between Turbine Capacity and Total Height, where the two variables are directly correlated. This means that generally, as the turbine's total height increases, this correlates to an increase in turbine capacity as well.
 
 ```{r echo=FALSE}
-ggplot(turbines) + aes(x=Turbine.Capacity, y=Turbine.Rotor_Diameter) +  geom_point(col='blue') + xlab('Turbine Capacity (kilo-watts)') + ylab("Rotor Diameter") + ggtitle('Distribution of Turbine Capacity and Rotor Diameter') + theme_classic()
+ggplot(turbines) + aes(x=Turbine.Capacity, y=Turbine.Rotor_Diameter) +  geom_point(col='pink') + xlab('Turbine Capacity (kilo-watts)') + ylab("Rotor Diameter") + ggtitle('Distribution of Turbine Capacity and Rotor Diameter') + theme_classic()
 ```
 
 The correlation coefficient between Turbine Capacity (KW) and Rotor Diameter of the Turbine (m) is `r cor(turbines$Turbine.Capacity, turbines$Turbine.Rotor_Diameter)`. Both the coefficient and the scatter plot reveal a strong positive correlation between Turbine Capacity and Rotor Diameter, where the two variables are directly correlated. This means that generally, as the turbine's rotor diameter increases, this correlates to an increase in turbine capacity as well.
